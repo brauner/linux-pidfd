@@ -16,7 +16,6 @@
 #include <linux/irqbypass.h>
 
 struct vhost_work;
-struct vhost_task;
 typedef void (*vhost_work_fn_t)(struct vhost_work *work);
 
 #define VHOST_WORK_QUEUED 1
@@ -27,8 +26,9 @@ struct vhost_work {
 };
 
 struct vhost_worker {
-	struct vhost_task	*vtsk;
+	struct task_struct	*task;
 	struct llist_head	work_list;
+	struct vhost_dev	*dev;
 	u64			kcov_handle;
 };
 
